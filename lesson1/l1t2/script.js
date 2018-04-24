@@ -1,0 +1,1 @@
+// Check whether a given number is prime. Log on console true or false.
