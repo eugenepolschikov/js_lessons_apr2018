@@ -16,7 +16,8 @@ if (typeof n === "number") {
         n = n / 10;
     }
 
-    console.log ("Reversed "+number+" is "+reversed);
+    console.log("### OPTION A#### -> Reversed " + number + " is " + reversed + "\n\n");
+
 }
 
 else {
@@ -24,5 +25,18 @@ else {
 }
 
 
-// option B
-// @TODO: cast to string and do the reverse string.
+// option B with recursion
+
+
+var foo = 123456789;
+var bar = '' + foo;
+
+function reverseString(str) {
+    if (str === "")
+        return "";
+    else
+        return reverseString(str.substr(1)) + str.charAt(0);
+}
+
+console.log("OPTION B: with recursion: "+reverseString(bar));
+
