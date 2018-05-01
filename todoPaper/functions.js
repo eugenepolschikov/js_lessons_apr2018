@@ -12,35 +12,62 @@
 // - completeTodoItem(todoItemId: number)
 // Change completed field of todoItem (get it by todoItemId) on true.
 
+// todoItem : { text: string, completed: boolean, id: number }.
 /**
  * Serves for checking the result of validity
  * check (text field is not empty, all fields are present and id is unique).
  * @param todoItem
  */
 function addTodoItem(todoItem) {
+    var ifValid = true;
 
-    // todoItem : { text: string, completed: boolean, id: number }.
+    // text length should be greater than 0 ; completed should either be equal to true or false ;
+    // item id should not be empty
+    if (todoItem["text"].length === 0 || (todoItem["completed"] != true && todoItem["completed"] != false) ||
+        todoItem["id"].length === 0) {
+        ifValid = false;
+        return ifValid;
+    }
+    //check for uniqueness of id
+    else {
+        for (var iter in todoItems) {
+            if (todoItems[iter]["id"] === todoItem["id"]) {
+                ifValid = false;
+                return ifValid;
+            }
+        }
+    }
+    // pushing item if all criteria matched
+    todoItems.push(todoItem);
+    return ifValid;
 }
 
+// todoItem : { text: string, completed: boolean, id: number }.
 /**
  *
  * @param typeOfTodoItem: e.g ‘completed’ || ‘not_completed’ || ‘all’
  */
-//@TODO: adjust via boolean values
 function viewTodoList(typeOfTodoItem) {
-
-    if (typeOfTodoItem === 'all') {
+    if (typeOfTodoItem === "all") {
         return todoItems;
     }
 
-    else {
-        var resultArray = todoItems.filter(function (item) {
-            return item['completed'] === typeOfTodoItem;
+    else if (typeOfTodoItem === "completed") {
+        var resultArrayCompleted = todoItems.filter(function (item) {
+            return item["completed"] === true;
         });
-        return resultArray;
+        return resultArrayCompleted;
+    }
+    else if (typeOfTodoItem === "not_completed") {
+        var resultArrayNonCompleted = todoItems.filter(function (item) {
+            return item["completed"] === false;
+        });
+        return resultArrayNonCompleted;
     }
 }
 
+
+// todoItem : { text: string, completed: boolean, id: number }.
 /**
  * If newText is not empty, function changes text of todoItem by todoItemId on the new text. It should return
  * flag, whether edit was successful.
@@ -49,43 +76,49 @@ function viewTodoList(typeOfTodoItem) {
  * @returns {boolean}
  */
 function editTodoItem(number, newText) {
-    var flagIfUpdated = false;
+    var IfUpdated = false;
     if (newText.length != 0) {
-        for (var x in todoItems) {
-            if (todoItems[x]['id'] === number) {
-                todoItems[x]['text'] = newText;
-                flagIfUpdated = true;
+        for (var i in todoItems) {
+            if (todoItems[i]["id"] === number) {
+                todoItems[i]["text"] = newText;
+                IfUpdated = true;
                 break;
             }
         }
     }
     else {
-        flagIfUpdated = false;
+        IfUpdated = false;
     }
-    return flagIfUpdated;
+    return IfUpdated;
 }
 
 
+// todoItem : { text: string, completed: boolean, id: number }.
 /**
  * Delete todoItem by todoItemId, return flag, whether delete was successful.
  * @param todoItemId
  */
 function deleteToDoItem(todoItemId) {
-    var ifDeletionSuccessful = false;
-
-
-    return ifDeletionSuccessful;
-
+    var ifDeleted = false;
+    for (var i = 0; i < todoItems.length; i++) {
+        if (todoItems[i]['id'] === todoItemId) {
+            todoItems.splice(i, 1);
+            ifDeleted = true;
+            break;
+        }
+    }
+    return ifDeleted;
 }
 
+// todoItem : { text: string, completed: boolean, id: number }.
 /**
  * Change completed field of todoItem (get it by todoItemId) on true.
  * @param todoItemId
  */
 function completeToDoItem(todoItemId) {
-    for (var x in todoItems) {
-        if (todoItems[x]['id'] === todoItemId) {
-            todoItems[x]['completed'] = true;
+    for (var i = 0; i < todoItems.length; i++) {
+        if (todoItems[i]["id"] === todoItemId) {
+            todoItems[i]["completed"] = true;
             break;
         }
     }
