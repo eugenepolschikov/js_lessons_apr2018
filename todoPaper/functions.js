@@ -19,18 +19,18 @@
  * @param todoItem
  */
 function addTodoItem(todoItem) {
-    var ifValid = true;
+    let ifValid = true;
 
     // text length should be greater than 0 ; completed should either be equal to true or false ;
     // item id should not be empty
-    if (todoItem["text"].length === 0 || (todoItem["completed"] != true && todoItem["completed"] != false) ||
+    if (todoItem["text"].length === 0 || typeof(todoItem["completed"]) !== typeof(true) ||
         todoItem["id"].length === 0) {
         ifValid = false;
         return ifValid;
     }
     //check for uniqueness of id
     else {
-        for (var iter in todoItems) {
+        for (let iter in todoItems) {
             if (todoItems[iter]["id"] === todoItem["id"]) {
                 ifValid = false;
                 return ifValid;
@@ -53,13 +53,13 @@ function viewTodoList(typeOfTodoItem) {
     }
 
     else if (typeOfTodoItem === "completed") {
-        var resultArrayCompleted = todoItems.filter(function (item) {
+        let resultArrayCompleted = todoItems.filter(function (item) {
             return item["completed"] === true;
         });
         return resultArrayCompleted;
     }
     else if (typeOfTodoItem === "not_completed") {
-        var resultArrayNonCompleted = todoItems.filter(function (item) {
+        let resultArrayNonCompleted = todoItems.filter(function (item) {
             return item["completed"] === false;
         });
         return resultArrayNonCompleted;
@@ -76,9 +76,9 @@ function viewTodoList(typeOfTodoItem) {
  * @returns {boolean}
  */
 function editTodoItem(number, newText) {
-    var IfUpdated = false;
-    if (newText.length != 0) {
-        for (var i in todoItems) {
+    let IfUpdated = false;
+    if (newText.length !== 0) {
+        for (let i in todoItems) {
             if (todoItems[i]["id"] === number) {
                 todoItems[i]["text"] = newText;
                 IfUpdated = true;
@@ -99,8 +99,8 @@ function editTodoItem(number, newText) {
  * @param todoItemId
  */
 function deleteToDoItem(todoItemId) {
-    var ifDeleted = false;
-    for (var i = 0; i < todoItems.length; i++) {
+    let ifDeleted = false;
+    for (let i = 0; i < todoItems.length; i++) {
         if (todoItems[i]['id'] === todoItemId) {
             todoItems.splice(i, 1);
             ifDeleted = true;
@@ -116,7 +116,7 @@ function deleteToDoItem(todoItemId) {
  * @param todoItemId
  */
 function completeToDoItem(todoItemId) {
-    for (var i = 0; i < todoItems.length; i++) {
+    for (let i = 0; i < todoItems.length; i++) {
         if (todoItems[i]["id"] === todoItemId) {
             todoItems[i]["completed"] = true;
             break;

@@ -13,8 +13,8 @@ function Machine(power) {
 function Fridge(power) {
     Machine.apply(this, arguments);
 
-    var food = [];
-    var maxQuantity = power / 100;
+    let food = [];
+    let maxQuantity = power / 100;
 
     this.addFood = function (item) {
 
@@ -32,14 +32,20 @@ function Fridge(power) {
                 food.push(newfood[i]);
 
             }
-
         }
-        console.log(food);
-
     }
+
+    this.getFood = function(){
+        return food.slice();
+    }
+
+
+
 }
 
-var myFridgeTest = new Fridge(100);
+var myFridgeTest = new Fridge(1000);
 myFridgeTest.enable();
 myFridgeTest.addFood("lemon");
 myFridgeTest.addFood("lemon, apple, apple, melon, pancake");
+
+console.log(myFridgeTest.getFood());
