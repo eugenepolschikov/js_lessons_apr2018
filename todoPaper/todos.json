@@ -1,1 +1,27 @@
-[{ "text": "test  totod item", "completed": false, "id": 1 },{ "text": "test  totod item", "completed": false, "id": 2 }]
+[
+  {
+    "text": "test  totod item",
+    "completed": false,
+    "id": 1
+  },
+  {
+    "text": "test  totod item",
+    "completed": false,
+    "id": 2
+  },
+  {
+    "text": "this is a third TODO item",
+    "completed": false,
+    "id": 3
+  },
+  {
+    "text": "this is a forth todo Item",
+    "completed": false,
+    "id": 4
+  },
+  {
+    "text": "this is a 5th todo Item",
+    "completed": true,
+    "id": 5
+  }
+]

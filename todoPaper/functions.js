@@ -52,18 +52,24 @@ function viewTodoList(typeOfTodoItem) {
         return todoItems;
     }
 
-    else if (typeOfTodoItem === "completed") {
-        let resultArrayCompleted = todoItems.filter(function (item) {
-            return item["completed"] === true;
-        });
-        return resultArrayCompleted;
+    else {
+
+        let resultArray = [];
+
+        if (typeOfTodoItem === "completed") {
+            resultArray = todoItems.filter(function (item) {
+                return item["completed"] === true;
+            });
+        }
+        else if (typeOfTodoItem === "not_completed") {
+            resultArray = todoItems.filter(function (item) {
+                return item["completed"] === false;
+            });
+
+        }
+        return resultArray;
     }
-    else if (typeOfTodoItem === "not_completed") {
-        let resultArrayNonCompleted = todoItems.filter(function (item) {
-            return item["completed"] === false;
-        });
-        return resultArrayNonCompleted;
-    }
+
 }
 
 
