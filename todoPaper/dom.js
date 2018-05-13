@@ -1,7 +1,6 @@
-/**
- * serving for deletion of all current items from the DOM and render items of an appropriate itemsType.
- * @param itemsType: ‘completed’ || ‘not_completed’ || ‘all’.
- */
+// Function takes itemsType argument (‘completed’, ‘not_completed’, ‘all’).
+// It should delete all current items from the DOM and render items of an appropriate itemsType.
+
 function viewTodoListDom(itemsType) {
     document.getElementById("todo-items").innerHTML = "";
     let todoList = viewTodoList(itemsType);
@@ -11,14 +10,14 @@ function viewTodoListDom(itemsType) {
     }
 }
 
-/**
- * serving for adding todoItem to the DOM. It includes the text and id as text fields
- * and a checkbox (for the completed field visualization).
- * @param todoItem: object
- */
+
+// addTodoItemDom(todoItem: object)
+// Add todoItem to the DOM. It should include the text and id as text fields
+// and a checkbox (for the completed field visualization).
+
 function addTodoItemDom(todoItem) {
     if (addTodoItem(todoItem)) {
-        viewTodoListDom("all");
+        document.getElementById("todo-items").appendChild(addTodoToHtml(todoItem));
     }
     else {
         alert("Unable to add this invalid Todo item!");
@@ -26,28 +25,28 @@ function addTodoItemDom(todoItem) {
 }
 
 
-/**
- * serving for adding single todoItem to html
- * @param toDoItem
- * @returns {HTMLDivElement}
- */
 function addTodoToHtml(toDoItem) {
     let div = document.createElement('div');
     div.className = "todo";
     div.id = toDoItem.id;
     let todoHtml;
     let checkBoxAttr = toDoItem.completed === true ? "checked" : "";
-    let isCompleted = toDoItem.completed === true ? "green" : "red";
+    let isCompleted = toDoItem.completed === true ? "disabled" : "enabled";
+    let isCompletedcol = toDoItem.completed === true ? "#4CAF50" : "#bc4226";
     todoHtml = `<div class="w3-container">
-	<button type="button" class="btn btn-info" data-toggle="collapse" style="width:600px;height:40px;" data-target="#demo${toDoItem.id}">To do item #${toDoItem.id} </button>
+	<!--<button type="button" class="btn btn-info" data-toggle="collapse" style="width:600px;height:40px;background-color = ${isCompletedcol}"-->
+	<button type="button" class="btn btn-info" data-toggle="collapse" style="width:600px;height:40px;background-color:${isCompletedcol}"
+	data-target="#demo${toDoItem.id}">To do item #${toDoItem.id} </button>
 	<div id="demo${toDoItem.id}" class="collapse">
 	</p>
 	<b>Text:</b>
 	</p>
-    <textarea rows="4" cols="50">${toDoItem.text}</textarea>	
+    <textarea rows="4" cols="50" ${isCompleted}>${toDoItem.text}</textarea>	
     <div class="checkbox">
-  	<label><input type="checkbox" value="" ${checkBoxAttr}>Is Completed: <span class="w3-${isCompleted}">${toDoItem.completed}</span></label>
-	</div>
+  	<label><input type="checkbox" value="" ${checkBoxAttr} ${isCompleted}>Is Completed</label>
+  	</div>
+  	<button type="button" id="saveToDo" class="btn btn-info" ${isCompleted} style="width:70px;height:30px;background-color: #4CAF50;">Save</button>
+  	<button type="button" id="deleteToDo" class="btn btn-info" ${isCompleted} style="width:70px;height:30px;background-color: #f44336;">Delete</button>
 	</div></div></br></br>`
 
     div.innerHTML = todoHtml;
@@ -55,29 +54,49 @@ function addTodoToHtml(toDoItem) {
 }
 
 
-/**
- * serving for replacement the text of the item with the given todoItemId.
- * @param todoItemId: number
- * @param newText: string
- */
+// editTodoItemDom(todoItemId: number, newText: string)
+// It should replace the text of the item with the given todoItemId.
+
 function editTodoItemDom(todoItemId, newText) {
     if (editTodoItem(todoItemId, newText)) {
+        // re-rendering all
         viewTodoListDom("all");
+
+        // improve this solution
+        // document.getElementById(""+todoItemId).innerHTML=addTodoToHtml(todoItems.filter(function(todoItemId){ return todoItems["id"]===todoItemId}));
+
+        // update text only
+        // var todoListDom = document.getElementById("todo-items");
+        // todoListDom.querySelector("#demo"+todoItemId+" textarea").value=newText;
+
     }
     else {
         alert("Unable to update Todo item with invalid Todo Item ID or empty text!");
     }
 }
 
-/**
- * serving for deletion of todoItem with the given todoItemId
- * @param todoItemId: number
- */
+
+// deleteTodoItemDom(todoItemId: number)
+// It should delete todoItem with the given todoItemId
+
 function deleteTodoItemDom(todoItemId) {
     if (deleteTodoItem(todoItemId)) {
-        viewTodoListDom("all");
+        // viewTodoListDom("all");
+        const list = document.getElementById('todo-items');
+        // list.removeChild(event.target.parentElement.parentElement.parentElement);
+        // list.removeChild(todoItemId);
+        list.removeChild(document.getElementById(todoItemId));
+
     }
     else {
         alert("Unable to delete a Todo Item with given id" + todoItemId);
     }
+}
+
+
+
+function completeTodoItemDom(todoItemId){
+    // document.getElementById("demo"+todoItemId)
+    // $("demo"+todoItemId +" div.checkbox").disabled = true;
+    completeToDoItem(todoItemId);
 }
